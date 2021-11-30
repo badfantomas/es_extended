@@ -242,6 +242,14 @@ function loadESXPlayer(identifier, playerId, isNew)
 	end)
 end
 
+AddEventHandler('chatMessage', function(playerId, author, message)
+	if message:sub(1, 1) == '/' and playerId > 0 then
+		CancelEvent()
+		local commandName = message:sub(1):gmatch("%w+")()
+		TriggerClientEvent('chat:addMessage', playerId, {args = {'^1SYSTEM', _U('commanderror_invalidcommand', commandName)}})
+	end
+end)
+
 local Logout = function(playerId)
 	local xPlayer = ESX.GetPlayerFromId(playerId)
 	if xPlayer then
